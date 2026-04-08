@@ -30,11 +30,21 @@ mongoose.connect(MONGODB_URI, {
 })
   .then(() => console.log('Successfully connected to MongoDB Atlas!'))
   .catch(err => {
-    console.error('MongoDB Connection Error Details:');
-    console.error('Message:', err.message);
-    console.error('Code:', err.code);
-    console.error('If this is ECONNREFUSED, please check your Atlas IP Whitelist (Network Access) or Port 27017.');
+    console.error('MongoDB Connection Error:', err.message);
   });
+
+// --- ADD THIS PORTION ---
+app.get('/status', (req, res) => {
+  res.json({
+    server: 'Running',
+    database: mongoose.connection.readyState === 1 ? 'Connected' : 'Disconnected',
+    env: {
+      MONGODB_URI: process.env.MONGODB_URI ? 'Defined' : 'Found',
+      JWT_SECRET: process.env.JWT_SECRET ? 'Defined' : 'Missing'
+    }
+  });
+});
+// ------------------------
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
