@@ -9,6 +9,7 @@ import ScholarshipsPage from './pages/ScholarshipsPage';
 import InternshipsPage from './pages/InternshipsPage';
 import AdminDashboard from './pages/AdminDashboard';
 import Auth from './pages/Auth';
+import VisionPage from './pages/VisionPage';
 import './index.css';
 
 const ProfileView = () => {
@@ -94,6 +95,12 @@ const AppContent = () => {
             <Route path="/admin" element={
               <ProtectedRoute adminOnly>
                 <AdminDashboard />
+              </ProtectedRoute>
+            } />
+
+            <Route path="/vision" element={
+              <ProtectedRoute>
+                <VisionPage />
               </ProtectedRoute>
             } />
             

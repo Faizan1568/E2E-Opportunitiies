@@ -14,12 +14,34 @@ const Navbar = () => {
 
   const NavLinksList = () => (
     <>
-      <NavLink to="/offline-scholarships" className="nav-link" onClick={closeMenu}>Offline Scholarship</NavLink>
-      <NavLink to="/online-scholarships" className="nav-link" onClick={closeMenu}>Online Scholarship</NavLink>
-      <NavLink to="/banking-scholarships" className="nav-link" onClick={closeMenu}>Banking Scholarship</NavLink>
-      <NavLink to="/state-scholarships" className="nav-link" onClick={closeMenu}>State Scholarship</NavLink>
-      <NavLink to="/loans" className="nav-link" onClick={closeMenu}>Interest Free Loan</NavLink>
-      <NavLink to="/internships" className="nav-link" onClick={closeMenu}>Internships & Jobs</NavLink>
+      <NavLink to="/offline-scholarships" className="nav-link multi-line" onClick={closeMenu}>
+        <span>Offline</span>
+        <span>Scholarship</span>
+      </NavLink>
+      <NavLink to="/online-scholarships" className="nav-link multi-line" onClick={closeMenu}>
+        <span>Online</span>
+        <span>Scholarship</span>
+      </NavLink>
+      <NavLink to="/banking-scholarships" className="nav-link multi-line" onClick={closeMenu}>
+        <span>Banking</span>
+        <span>Scholarship</span>
+      </NavLink>
+      <NavLink to="/state-scholarships" className="nav-link multi-line" onClick={closeMenu}>
+        <span>State</span>
+        <span>Scholarship</span>
+      </NavLink>
+      <NavLink to="/loans" className="nav-link multi-line" onClick={closeMenu}>
+        <span>Interest Free</span>
+        <span>Loan</span>
+      </NavLink>
+      <NavLink to="/internships" className="nav-link multi-line" onClick={closeMenu}>
+        <span>Internships</span>
+        <span>& Jobs</span>
+      </NavLink>
+      <NavLink to="/vision" className="nav-link multi-line vision-link" onClick={closeMenu}>
+        <span>Vision &</span>
+        <span>Planning</span>
+      </NavLink>
     </>
   );
 
@@ -31,7 +53,7 @@ const Navbar = () => {
             {isMenuOpen ? <X size={28} /> : <Menu size={28} />}
           </button>
           <Link to="/" className="logo-container" style={{ display: 'flex', alignItems: 'center', gap: '12px', textDecoration: 'none' }} onClick={closeMenu}>
-            <img src="/logo.png" alt="E2E Logo" style={{ height: '60px', width: 'auto', mixBlendMode: 'multiply' }} />
+            <img src="/logo.png" alt="E2E Logo" style={{ height: '60px', width: 'auto' }} />
             <div className="brand-text" style={{ display: 'flex', flexDirection: 'column' }}>
               <span className="brand-title" style={{ fontSize: '1.4rem', fontWeight: '800', color: 'var(--primary-color)', lineHeight: '1.1' }}>E2E Opportunities</span>
               <span className="brand-slogan" style={{ fontSize: '0.85rem', fontStyle: 'italic', color: 'var(--text-color)', opacity: 0.7, fontWeight: '500' }}>"Education to Employment"</span>

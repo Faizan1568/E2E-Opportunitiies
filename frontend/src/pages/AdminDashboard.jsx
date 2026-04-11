@@ -38,7 +38,8 @@ const AdminDashboard = () => {
       mode: 'Online',
       applyLink: '',
       address: '',
-      image: ''
+      image: '',
+      city: '',
     });
 
     const [showModal, setShowModal] = useState(false);
@@ -57,14 +58,15 @@ const AdminDashboard = () => {
           mode: 'Online', 
           applyLink: '', 
           address: '',
-          image: ''
+          image: '',
+          city: '',
         });
       }
     };
 
     return (
-      <form onSubmit={handleSubmit} className="glass" style={{ padding: '40px', color: 'white', backgroundColor: 'var(--admin-form-bg)', maxWidth: '800px', margin: '0 auto' }}>
-        <h2 style={{ color: 'white', marginBottom: '30px', textAlign: 'center' }}>Add Details</h2>
+      <form onSubmit={handleSubmit} className="glass" style={{ padding: '40px', color: 'var(--header-text)', backgroundColor: 'var(--admin-form-bg)', maxWidth: '800px', margin: '0 auto' }}>
+        <h2 style={{ color: 'var(--header-text)', marginBottom: '30px', textAlign: 'center' }}>Add Details</h2>
         
         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '20px' }}>
           <div className="form-group">
@@ -166,18 +168,31 @@ const AdminDashboard = () => {
           </div>
 
           {formData.mode === 'Offline' && (
-            <div className="form-group" style={{ gridColumn: '1 / -1' }}>
-              <label style={{ display: 'block', marginBottom: '8px' }}>Address</label>
-              <input 
-                type="text" 
-                required 
-                placeholder="Full Address" 
-                value={formData.address} 
-                onChange={e => setFormData({...formData, address: e.target.value})} 
-                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }} 
-              />
-            </div>
+            <>
+              <div className="form-group" style={{ gridColumn: '1 / -1' }}>
+                <label style={{ display: 'block', marginBottom: '8px' }}>Address</label>
+                <input 
+                  type="text" 
+                  required 
+                  placeholder="Full Address" 
+                  value={formData.address} 
+                  onChange={e => setFormData({...formData, address: e.target.value})} 
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }} 
+                />
+              </div>
+              <div className="form-group">
+                <label style={{ display: 'block', marginBottom: '8px' }}>City (For Filter)</label>
+                <input 
+                  type="text" 
+                  placeholder="e.g. Mumbai" 
+                  value={formData.city} 
+                  onChange={e => setFormData({...formData, city: e.target.value})} 
+                  style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }} 
+                />
+              </div>
+            </>
           )}
+
         </div>
 
         <button type="submit" className="btn btn-secondary" style={{ marginTop: '30px', width: '100%', padding: '15px', fontSize: '1.1rem' }}>

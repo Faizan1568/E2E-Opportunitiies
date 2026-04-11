@@ -1,14 +1,18 @@
 import React, { useState } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { useTheme } from '../context/ThemeContext';
+import { Mail, Lock, Eye, EyeOff, Users, ArrowRight, Sun, Moon } from 'lucide-react';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [category, setCategory] = useState('Student');
   const [role, setRole] = useState('user');
   const { login, signup } = useAuth();
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
@@ -32,61 +36,150 @@ const Auth = () => {
   };
 
   return (
-    <div className="container" style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '80vh' }}>
-      <div className="glass" style={{
-        padding: '40px',
-        maxWidth: '400px',
+    <div className="auth-page" style={{ 
+      display: 'flex', 
+      justifyContent: 'center', 
+      alignItems: 'center', 
+      minHeight: '100vh',
+      padding: '20px',
+      position: 'relative'
+    }}>
+      {/* Standalone Theme Toggle for Auth Page */}
+      <button 
+        onClick={toggleTheme}
+        className="glass"
+        style={{
+          position: 'absolute',
+          top: '30px',
+          right: '30px',
+          background: 'var(--glass-bg)',
+          border: '1px solid var(--glass-border)',
+          padding: '12px',
+          borderRadius: '50%',
+          cursor: 'pointer',
+          color: 'var(--primary-color)',
+          backdropFilter: 'blur(10px)',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          boxShadow: 'var(--card-shadow)',
+          zIndex: 10
+        }}
+        title="Toggle Theme"
+      >
+        {theme === 'light' ? <Moon size={24} /> : <Sun size={24} />}
+      </button>
+      <div className="glass auth-card" style={{
+        padding: '30px 40px',
+        maxWidth: '480px',
         width: '100%',
-        backgroundColor: '#004d40',
-        color: 'white',
-        boxShadow: '0 20px 50px rgba(0,0,0,0.3)'
+        boxShadow: 'var(--card-shadow)',
+        position: 'relative',
+        overflow: 'hidden'
       }}>
-        <h2 style={{ textAlign: 'center', marginBottom: '30px', color: '#ffc107' }}>
-          {isLogin ? 'Sign In' : 'Join Community'}
+        {/* Branding */}
+        <div style={{ textAlign: 'center', marginBottom: '25px' }}>
+          <img 
+            src="/logo.png" 
+            alt="Logo" 
+            style={{ height: '120px', width: 'auto', marginBottom: '10px' }} 
+          />
+        </div>
+
+        <h2 style={{ textAlign: 'center', marginBottom: '20px', fontWeight: '800' }}>
+          {isLogin ? 'Welcome Back' : 'Create Account'}
         </h2>
+
         <form onSubmit={handleSubmit}>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Account Type</label>
+          {/* Role Selection */}
+          <div className="filter-group" style={{ marginBottom: '15px' }}>
+            <label className="filter-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Users size={14} /> I am a...
+            </label>
             <select 
+              className="modern-select"
               value={role} 
               onChange={e => setRole(e.target.value)}
-              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none', background: 'white', color: '#333' }}
+              style={{ 
+                width: '100%', 
+                padding: '12px',
+                border: '2px solid var(--primary-color)',
+                backgroundColor: 'var(--card-bg)',
+                borderRadius: '12px',
+                fontSize: '1rem',
+                fontWeight: '600',
+                cursor: 'pointer',
+                appearance: 'auto'
+              }}
             >
               <option value="user">User / Student</option>
               <option value="admin">Administrator</option>
             </select>
           </div>
 
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Email</label>
+          {/* Email */}
+          <div className="filter-group" style={{ marginBottom: '15px' }}>
+            <label className="filter-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Mail size={14} /> Email Address
+            </label>
             <input 
               type="email" 
+              className="modern-select"
               required 
               value={email} 
               onChange={e => setEmail(e.target.value)} 
-              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }}
-              placeholder="Enter your email"
-            />
-          </div>
-          <div style={{ marginBottom: '20px' }}>
-            <label style={{ display: 'block', marginBottom: '8px' }}>Password</label>
-            <input 
-              type="password" 
-              required 
-              value={password} 
-              onChange={e => setPassword(e.target.value)} 
-              style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }}
-              placeholder="Enter your password"
+              placeholder="name@example.com"
+              style={{ width: '100%', padding: '12px' }}
             />
           </div>
 
+          {/* Password */}
+          <div className="filter-group" style={{ marginBottom: '15px', position: 'relative' }}>
+            <label className="filter-label" style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+              <Lock size={14} /> Password
+            </label>
+            <div style={{ position: 'relative' }}>
+              <input 
+                type={showPassword ? 'text' : 'password'} 
+                className="modern-select"
+                required 
+                value={password} 
+                onChange={e => setPassword(e.target.value)} 
+                placeholder="enter password"
+                style={{ width: '100%', padding: '12px', paddingRight: '50px' }}
+              />
+              <button 
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                style={{
+                  position: 'absolute',
+                  right: '15px',
+                  top: '50%',
+                  transform: 'translateY(-50%)',
+                  background: 'none',
+                  border: 'none',
+                  color: 'var(--primary-color)',
+                  cursor: 'pointer',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  zIndex: 2,
+                  transition: 'var(--transition)'
+                }}
+              >
+                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+              </button>
+            </div>
+          </div>
+
           {!isLogin && role === 'user' && (
-            <div style={{ marginBottom: '20px' }}>
-              <label style={{ display: 'block', marginBottom: '8px' }}>Category</label>
+            <div className="filter-group" style={{ marginBottom: '15px' }}>
+              <label className="filter-label">Academic Category</label>
               <select 
+                className="modern-select"
                 value={category} 
                 onChange={e => setCategory(e.target.value)}
-                style={{ width: '100%', padding: '12px', borderRadius: '8px', border: 'none' }}
+                style={{ width: '100%', padding: '12px' }}
               >
                 <option>Student</option>
                 <option>Graduate</option>
@@ -94,19 +187,38 @@ const Auth = () => {
               </select>
             </div>
           )}
-          <button type="submit" className="btn btn-secondary" style={{ width: '100%', marginTop: '10px' }}>
-            {isLogin ? 'Login' : 'Sign Up'}
+
+          <button type="submit" className="btn btn-primary" style={{ 
+            width: '100%', 
+            padding: '14px', 
+            fontSize: '1.1rem', 
+            display: 'flex', 
+            alignItems: 'center', 
+            justifyContent: 'center', 
+            gap: '10px',
+            marginTop: '10px',
+            boxShadow: '0 4px 15px rgba(var(--primary-color-rgb), 0.3)'
+          }}>
+            {isLogin ? 'Sign In' : 'Sign Up'}
+            <ArrowRight size={20} />
           </button>
         </form>
-        <p style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem' }}>
-          {isLogin ? "Don't have an account? " : "Already have an account? "}
+
+        <div style={{ textAlign: 'center', marginTop: '20px', fontSize: '0.9rem', opacity: 0.9 }}>
+          {isLogin ? "New to E2E? " : "Already have an account? "}
           <span 
             onClick={() => setIsLogin(!isLogin)} 
-            style={{ color: '#ffc107', cursor: 'pointer', fontWeight: 'bold' }}
+            style={{ 
+              color: 'var(--secondary-color)', 
+              cursor: 'pointer', 
+              fontWeight: '800', 
+              textDecoration: 'underline',
+              marginLeft: '5px'
+            }}
           >
-            {isLogin ? 'Sign Up' : 'Login'}
+            {isLogin ? 'Create Account' : 'Login Here'}
           </span>
-        </p>
+        </div>
       </div>
     </div>
   );

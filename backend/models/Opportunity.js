@@ -47,6 +47,12 @@ const opportunitySchema = new mongoose.Schema({
   },
   skills: {
     type: String // For internships
+  },
+  city: {
+    type: String // For offline filtering
+  },
+  incomeLimit: {
+    type: Number // For income filtering
   }
 }, { timestamps: true });
 

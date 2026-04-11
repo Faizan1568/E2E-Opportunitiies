@@ -20,7 +20,7 @@ const OpportunityCard = ({ type, data }) => {
           </div>
         )}
         <h3 style={{ fontSize: data.image ? '1.2rem' : '1.4rem' }}>{isInternship ? data.title : data.name}</h3>
-        <div style={{ display: 'flex', alignItems: 'center', gap: '5px', fontSize: '0.85rem', color: 'rgba(255,255,255,0.9)', fontWeight: '600', marginTop: '5px' }}>
+        <div className="card-category-group">
           <GraduationCap size={16} /> {isInternship ? data.company : data.category}
         </div>
       </div>
@@ -30,6 +30,12 @@ const OpportunityCard = ({ type, data }) => {
             <>
               <div className="card-info"><CreditCard size={16} className="card-icon" /> <span className="card-label">Amount:</span> {data.amount}</div>
               <div className="card-info"><LinkIcon size={16} className="card-icon" /> <span className="card-label">Eligibility:</span> {data.eligibility}</div>
+              {data.incomeLimit && (
+                <div className="card-info income-limit-highlight">
+                  <CreditCard size={16} className="card-icon" /> 
+                  <span className="card-label">Income Limit:</span> Up to {new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(data.incomeLimit)}
+                </div>
+              )}
               <div className="card-info">
                 <span className={`status-badge ${
                   data.status === 'Available' ? 'status-available' : 

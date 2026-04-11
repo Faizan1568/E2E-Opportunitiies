@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import HeroSlider from '../components/HeroSlider';
 import { useData } from '../context/DataContext';
 import OpportunityCard from '../components/OpportunityCard';
+import WhatsAppWidget from '../components/WhatsAppWidget';
 
 const Counter = ({ target, duration = 2000 }) => {
   const [count, setCount] = useState(0);
@@ -28,11 +29,11 @@ const Home = () => {
   const { scholarships, internships } = useData();
 
   const stats = [
-    { label: 'Offline Scholarships', count: 200, icon: '🏛️' },
-    { label: 'Online Scholarships', count: 300, icon: '🌐' },
-    { label: 'State Scholarships', count: 150, icon: '🗺️' },
-    { label: 'Banking Scholarships', count: 50, icon: '🏦' },
-    { label: 'Interest Free Loans', count: 20, icon: '🤝' },
+    { label: 'Offline Scholarships', count: scholarships.filter(s => s.mode === 'Offline').length || 200, icon: '🏛️' },
+    { label: 'Online Scholarships', count: scholarships.filter(s => s.mode === 'Online').length || 300, icon: '🌐' },
+    { label: 'State Scholarships', count: scholarships.filter(s => s.mode === 'state').length || 150, icon: '🗺️' },
+    { label: 'Banking Scholarships', count: scholarships.filter(s => s.mode === 'bank').length || 50, icon: '🏦' },
+    { label: 'Interest Free Loans', count: scholarships.filter(s => s.mode === 'Loan').length || 20, icon: '🤝' },
   ];
 
   const sections = [
@@ -112,6 +113,7 @@ const Home = () => {
           </div>
         </div>
       </div>
+      <WhatsAppWidget />
     </div>
   );
 };

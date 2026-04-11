@@ -1,10 +1,11 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import Papa from 'papaparse';
+import { extractCity, extractState } from '../utils/dataParser';
 
 const DataContext = createContext();
 
 const CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT52YDHf-OGVMFl1ZjPIY-b1CkfbczpythdhCNwyoIpMrWTzHiBGPaqPBgXAH2XQGO8kpmBJXuakoW4/pub?output=csv';
-const API_URL = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL}/api/opportunities` : 'http://localhost:5000/api/opportunities';
+const API_URL = 'http://localhost:5000/api/opportunities';
 
 export const DataProvider = ({ children }) => {
   const [scholarships, setScholarships] = useState([]);
@@ -44,7 +45,9 @@ export const DataProvider = ({ children }) => {
                 amount: row.Amount || 'Check Website',
                 address: row.Address || '',
                 image: row.Image || '',
-                status: row.Status || 'Available'
+                status: row.Status || 'Available',
+                city: extractCity(row.Address || ''),
+                state: extractState(row.Eligibility || '')
               }));
             
             // Re-map common modes to capitalized format
